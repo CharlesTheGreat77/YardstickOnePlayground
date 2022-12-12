@@ -9,6 +9,7 @@ Yardstick One Scripts for your RF Adventures
 # Key Notes
   To use rpitx as a jammer, please be sure you have it INSTALLED!
 
+
   - and have an antenna (copper wire) connected to GPIO 4
 
     -- put the jammer.iq file into the rpitx directory
@@ -23,9 +24,9 @@ Yardstick One Scripts for your RF Adventures
 
    rpitx (if using rpitx to jam)
     -- https://github.com/F5OEO/rpitx
-       Read at Key Notes
+         Read Key Notes --optional
 
-   Two yardstick ones ONLY if using other as jammer for rolljam
+   Two yardstick ones ONLY if using other as jammer for rolljam --optional
 
 # Usage
 ```
