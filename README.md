@@ -70,7 +70,7 @@ optional arguments:
                         second whenever specified
   -a, --auto            Enable to automatically send
                         captures/cap files / Use in
-                        conjunction with -rn/--rolljam to
+                        conjunction with -rj/--rolljam to
                         send the first signal automatically
   --lowball             enable lowball (noise)
   -rpiJ RPITX_JAMMER, --rpitx_jammer RPITX_JAMMER
