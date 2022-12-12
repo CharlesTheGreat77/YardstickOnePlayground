@@ -23,7 +23,7 @@ Yardstick One Scripts for your RF Adventures
    3. Two yardstick ones ONLY if using for rolljam
    
 # Key Notes
-  To use rpitx as a jammer, please be sure you have it INSTALLED!
+  To use rpitx for rolljam attacks, please be sure you have it INSTALLED!
   
   - and have an antenna (copper wire) connected to GPIO 4
 
