@@ -5,7 +5,7 @@ import argparse, bitstring, time
 import subprocess
 
 def main():
-    parser = argparse.ArgumentParser(description="Replay Attacks for YardStick One")
+    parser = argparse.ArgumentParser(description="YardRF is for relaying/capturing/jamming/rolljam fun")
     parser.add_argument('-f', '--frequency', help='Specify frequency to listen on [default: 433.92MHz (433920000)]', default=433920000, type=int)
     parser.add_argument('-m', '--modulation', help='Specify modulation type [default: ASK_OOK] example: 2fsk', default='MOD_ASK_OOK')
     parser.add_argument('-b', '--baudrate', help='Specify sample rate, baudrate [default: 4800] example: 4000', default=4800, type=int)
