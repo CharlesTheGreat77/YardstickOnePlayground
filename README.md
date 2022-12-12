@@ -8,8 +8,11 @@ Yardstick One Scripts for your RF Adventures
 
 # Key Notes
   To use rpitx as a jammer, please be sure you have it INSTALLED!
+
   - and have an antenna (copper wire) connected to GPIO 4
+
     -- put the jammer.iq file into the rpitx directory
+
     -- sendiq IN rpitx needs sudo so be wary of such (for me at least)
 
 # Prerequisite
