@@ -85,7 +85,7 @@ def main():
             print("[*] Jammer is done transmitting")
             # give time to stop pressing fob
             time.sleep(1)
-        # jam with orher yardstick if specified
+        # jam with other yardstick if specified
         elif ysJ:
             # config jammer
             c = RfCat(idx=1)
@@ -94,9 +94,9 @@ def main():
             if offset < 300000000:
                 offset = frequency + 300000
             c.setFreq(offset)
-            c.setMdmDRate(results.baudRate)
-            c.setMdmChanBW(results.chanBW)
-            c.setMdmChanSpc(results.chanWidth)
+            c.setMdmDRate(baudrate)
+            c.setMdmChanBW(channel_bandwidth)
+            c.setMdmChanSpc(channel_spacing)
             c.setChannel(0)
             c.setMaxPower() # max power
             c.lowball(1)
