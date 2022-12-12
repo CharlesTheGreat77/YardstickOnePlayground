@@ -45,7 +45,7 @@ optional arguments:
                         [default: 4800] example: 4000
   -d DEVIATION, --deviation DEVIATION
                         Specify deviation [default: 0]
-                        examples: 2.380371, 47.60742, 29.30
+                        examples: 23803.71, 47607.42, 2930
   -s CHANNEL_SPACING, --channel_spacing CHANNEL_SPACING
                         Specify Channel Spacing [Default:
                         24000]
@@ -87,3 +87,31 @@ optional arguments:
                         Enable jammer with an EXTRA
                         yardstick one
 ```
+
+# Usage example
+```
+python3 yardRF.py -f 300000000 -l 2 -n 1 -rj --lowball -o unlock.cap
+```
+-- captures signals on frequency 300MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), rolljam enabled (so send the first capture only, THEN other captures), --lowball to capture some noise, -o saves the capture to a file (-o/--output). 
+
+```
+python3 yardRF.py -f 315000000 -l 2 -n 1 -d 47607.42 -m 2fsk -a
+```
+-- captures signals on frequency 315MHz, waits for 2 signals (-l/--limit), send the signals captured only once (-n/--number), set the deviation to 47607.42 (-d/--deviation), set modulation to 2fsk [default: ASK_OOK] (-m/--modulation), automatically send captued signals (-a/--automatic).
+```
+python3 yardRF.py -f 925000000 -l 2 -n 1 -cb 60000 -bs 200 -o unlock.cap
+```
+-- captures signals on frequency 925MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), set channel bandwidth to 60000 (-cb/--channel_bandwidth), set the blocksize [size of the capture/payload] (-bs/--blocksize), save captures to a file (-o/--output).
+
+• Usage with jammers
+rpitx usage
+```
+python3 yardRF.py -f 433920000 -l 2 -n 1 -rpiJ ~/rpitx/ -m 2fsk -o unlock.cap
+```
+-- captures signals on frequency 433.92MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), use rpitx for jammer by specifying the path to rpitx (-rpiJ/--rpitx_jammer), set the modulation to 2fsk [default: ASK_OOK] (-m/--modulation), save captures to a file(-o/--output)
+
+Extra Yardstick One Jammer
+```
+python3 yardRF.py -f 305000000 -l 2 -n 1 -ysJ -o unlock.cap
+```
+-- captures signals on frequency 305MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), use rpitx for jammer by specifying the path to rpitx (-rpiJ/--rpitx_jammer), set the modulation to 2fsk [default: ASK_OOK] (-m/--modulation), save captures to a file(-o/--output)
