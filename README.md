@@ -24,7 +24,7 @@ Yardstick One Scripts for your RF Adventures
 
    rpitx (if using rpitx to jam)
     -- https://github.com/F5OEO/rpitx
-         Read Key Notes --optional
+         Read Key Notes  --optional
 
    Two yardstick ones ONLY if using other as jammer for rolljam --optional
 
