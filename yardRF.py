@@ -93,7 +93,7 @@ def main():
             offset = frequency - 300000
             if offset < 300000000:
                 offset = frequency + 300000
-            c.setFreq(frequency)+int(offset)
+            c.setFreq(offset)
             c.setMdmDRate(results.baudRate)
             c.setMdmChanBW(results.chanBW)
             c.setMdmChanSpc(results.chanWidth)
