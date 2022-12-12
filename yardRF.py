@@ -142,12 +142,11 @@ def main():
         if not auto:
             input("[ENTER TO SEND PAYLOAD]")
         print("[*] Replaying all captured signals..\n")
-        for x in range(1, number):
-            for payload in payloads:
-                d.makePktFLEN(len(payload))
-                time.sleep(.5)
-                d.RFxmit(payload)
-                print("[PACKET SENT] Payload transmittion completed..\n")
+        for x in range(0, number):
+            d.makePktFLEN(len(payloads[x]))
+            #time.sleep(.5)
+            d.RFxmit(payloads[x])
+            print("[PACKET SENT] Payload transmittion completed..\n")
 
     print("[*] All captures were sent successfully..")
     d.setModeIDLE()
