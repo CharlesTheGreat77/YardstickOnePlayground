@@ -13,12 +13,12 @@ Yardstick One Scripts for your RF Adventures
 
 # Optional Settings
    If you are using a raspberry pi to do your duties
-   1. RaspAP to connected to rpi w/o internet (create own ap)
-      -- 
+   1. RaspAP to connected to rpi w/o internet (create ap)
+      -- https://raspap.com
 
-   2. rpitx (if using rpitx to jam)
+   2. rpitx (if using rpitx to rolljam)
      -- https://github.com/F5OEO/rpitx
-         Read Key Notes 
+        Read Key Notes 
 
    3. Two yardstick ones ONLY if using for rolljam
    
