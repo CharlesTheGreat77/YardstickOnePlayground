@@ -98,22 +98,25 @@ python3 yardRF.py -f 300000000 -l 2 -n 1 -rj --lowball -o unlock.cap
 -- captures signals on frequency 300MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), rolljam enabled (so send the first capture only, THEN other captures), --lowball to capture some noise, -o saves the capture to a file (-o/--output). 
 
 ```
-python3 yardRF.py -f 315000000 -l 2 -n 1 -d 47607.42 -m 2fsk -a
+python3 yardRF.py -f 315000000 -l 2 -n 1 -d 2930 -m 2fsk -a
 ```
--- captures signals on frequency 315MHz, waits for 2 signals (-l/--limit), send the signals captured only once (-n/--number), set the deviation to 47607.42 (-d/--deviation), set modulation to 2fsk [default: ASK_OOK] (-m/--modulation), automatically send captued signals (-a/--automatic).
+-- captures signals on frequency 315MHz, waits for 2 signals (-l/--limit), send the signals captured only once (-n/--number), set the deviation to 2930 [29.30] (-d/--deviation), set modulation to 2fsk [default: ASK_OOK] (-m/--modulation), automatically send captued signals (-a/--automatic).
 ```
 python3 yardRF.py -f 925000000 -l 2 -n 1 -cb 60000 -bs 200 -o unlock.cap
 ```
 -- captures signals on frequency 925MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), set channel bandwidth to 60000 (-cb/--channel_bandwidth), set the blocksize [size of the capture/payload] (-bs/--blocksize), save captures to a file (-o/--output).
-
+```
+python3 yardRF.py -f 330000000 -l 5 -n 1 -minRSSI -80 -maxRSSI 20 -b 4000 -o output.cap
+```
+-- captures signals on frequency 300MHz, waits for 5 signals (-l/--limit), sets minimum signal strength to -80 db [used in conjunction with --maxRSSI to only capture signals between a certain range] (-minRSSI, --minRSSI), set maximum signal strength of 40 db (-maxRSSI/--maxRSSI), set baudrate to 4000 [how long each bit is transmitted for] (-b/--baudrate), save captured signals to an output file (-o/--output)
 • Usage with jammers
 rpitx usage
 ```
 python3 yardRF.py -f 433920000 -l 2 -n 1 -rpiJ ~/rpitx/ -m 2fsk -d 47607.42 -o unlock.cap
 ```
--- captures signals on frequency 433.92MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), use rpitx for jammer by specifying the path to rpitx (-rpiJ/--rpitx_jammer), set the modulation to 2fsk [default: ASK_OOK] (-m/--modulation), we setting the deviation to 47607.42 (-d/--deviation), save captures to a file(-o/--output)
+-- captures signals on frequency 433.92MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), use rpitx for jammer by specifying the path to rpitx (-rpiJ/--rpitx_jammer), set the modulation to 2fsk [default: ASK_OOK] (-m/--modulation), we setting the deviation to 47607.42 [47.60742] (-d/--deviation), save captures to a file(-o/--output)
 
-Extra Yardstick One Jammer
+Extra Yardstick One rolljam
 ```
 python3 yardRF.py -f 305000000 -l 2 -n 1 -ysJ -o unlock.cap
 ```
