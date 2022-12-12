@@ -56,7 +56,7 @@ def main():
     if modulation=="2FSK" or modulation == "2fsk":
         d.setMdmModulation(MOD_2FSK)
     else:
-        d.setMdmModulation(MOD_ASK_OOK)
+        d.setMdmModulation(modulation)
     d.setMdmDRate(baudrate)
     d.setMdmChanSpc(channel_spacing)
     d.setMdmChanBW(channel_bandwidth)
