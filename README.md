@@ -114,4 +114,4 @@ Extra Yardstick One Jammer
 ```
 python3 yardRF.py -f 305000000 -l 2 -n 1 -ysJ -o unlock.cap
 ```
--- captures signals on frequency 305MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), use rpitx for jammer by specifying the path to rpitx (-rpiJ/--rpitx_jammer), set the modulation to 2fsk [default: ASK_OOK] (-m/--modulation), save captures to a file(-o/--output)
+-- captures signals on frequency 305MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), use additional yardstick one to jam (-ysJ/--yardstick_jammer), set the modulation to 2fsk [default: ASK_OOK] (-m/--modulation), save captures to a file(-o/--output)
