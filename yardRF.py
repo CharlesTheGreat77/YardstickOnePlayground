@@ -44,7 +44,7 @@ def main():
     ysJ = args.yardstick_jammer
 
     ##some sanity check
-    # no medical frequencies ranges please
+    # no medical frequency ranges please
     if (frequency >= 400000000) and (frequency <= 416000000):
         print("[*] Sorry, Medical frequency ranges are permitted..\n")
         exit(0)
