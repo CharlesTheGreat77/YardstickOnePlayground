@@ -9,7 +9,7 @@ def main():
     parser.add_argument('-f', '--frequency', help='Specify frequency to listen on [default: 433.92MHz (433920000)]', default=433920000, type=int)
     parser.add_argument('-m', '--modulation', help='Specify modulation type [default: ASK_OOK] example: 2fsk', default='MOD_ASK_OOK')
     parser.add_argument('-b', '--baudrate', help='Specify sample rate, baudrate [default: 4800] example: 4000', default=4800, type=int)
-    parser.add_argument('-d', '--deviation', help='Specify deviation [default: 0] examples: 2.380371, 47.60742, 29.30', default=0, type=float)
+    parser.add_argument('-d', '--deviation', help='Specify deviation [default: 0] examples: 23803.71, 47607.42, 29.30', default=0, type=float)
     parser.add_argument('-s', '--channel_spacing', help='Specify Channel Spacing [Default: 24000]', type=int, default=24000)
     parser.add_argument('-cb', '--channel_bandwidth', help='Specify channel bandwidth [default: 60000]', default=60000, type=int)
     parser.add_argument('-bs', '--blocksize', help='Specify capture blocksize [default: 400]', default=400, type=int)
