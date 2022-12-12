@@ -16,6 +16,7 @@ Yardstick One Scripts for your RF Adventures
     -- sendiq IN rpitx needs sudo so be wary of such (for me at least)
 
 # Prerequisite
+   One Yardstick one minimum
    rpitx (if using rpitx to jam)
     -- https://github.com/F5OEO/rpitx
        Read at Key Notes
