@@ -16,7 +16,11 @@ Yardstick One Scripts for your RF Adventures
     -- sendiq IN rpitx needs sudo so be wary of such (for me at least)
 
 # Prerequisite
-   One Yardstick one minimum
+   One Yardstick one minimum (rfcat installed)
+
+   RaspAP to connected to rpi w/o internet (create own ap)
+   -- optional
+
    rpitx (if using rpitx to jam)
     -- https://github.com/F5OEO/rpitx
        Read at Key Notes
