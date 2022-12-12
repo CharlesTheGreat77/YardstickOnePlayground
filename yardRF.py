@@ -69,10 +69,8 @@ def main():
 
     # read from cap file
     if cap:
-        signals = []
-        file = open(cap, 'r')
-        for signal in file:
-            signals.append(signal)
+        with open(cap, 'r') as file:
+            signals = [capture.rstrip() for capture in file]
 
     else:
         # start jamming with rpitx if specified
