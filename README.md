@@ -109,9 +109,9 @@ python3 yardRF.py -f 925000000 -l 2 -n 1 -cb 60000 -bs 200 -o unlock.cap
 • Usage with jammers
 rpitx usage
 ```
-python3 yardRF.py -f 433920000 -l 2 -n 1 -rpiJ ~/rpitx/ -m 2fsk -o unlock.cap
+python3 yardRF.py -f 433920000 -l 2 -n 1 -rpiJ ~/rpitx/ -m 2fsk -d 47607.42 -o unlock.cap
 ```
--- captures signals on frequency 433.92MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), use rpitx for jammer by specifying the path to rpitx (-rpiJ/--rpitx_jammer), set the modulation to 2fsk [default: ASK_OOK] (-m/--modulation), save captures to a file(-o/--output)
+-- captures signals on frequency 433.92MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), use rpitx for jammer by specifying the path to rpitx (-rpiJ/--rpitx_jammer), set the modulation to 2fsk [default: ASK_OOK] (-m/--modulation), we setting the deviation to 47607.42 (-d/--deviation), save captures to a file(-o/--output)
 
 Extra Yardstick One Jammer
 ```
