@@ -78,7 +78,7 @@ def main():
     else:
         # start jamming with rpitx if specified
         if rpitxJ != '':
-            print("[*] Starting Jammer with rpitx\n -  Frequency: " + str(frequency - 250000))
+            print("[*] Starting Jammer with rpitx\n -  Frequency: " + str(frequency - 300000))
             proc = rpitxJammer(frequency, rpitxJ)
             signals = captureSignal(d, minRSSI, maxRSSI, limit, bs)
             proc.kill() # stop jammer
