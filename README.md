@@ -7,31 +7,33 @@ Yardstick One Scripts for your RF Adventures
   I am not responsible for the usage of this utility, it is simply for researching and experimentation for myself.
   The user, YOU take full responsibility for your actions. 
 
+# Prerequisite
+   Python3/2
+   One Yardstick one minimum (rfcat installed)
+
+# Optional Settings
+   If you are using a raspberry pi to do your duties
+   1. RaspAP to connected to rpi w/o internet (create own ap)
+      -- 
+
+   2. rpitx (if using rpitx to jam)
+     -- https://github.com/F5OEO/rpitx
+         Read Key Notes 
+
+   3. Two yardstick ones ONLY if using for rolljam
+   
 # Key Notes
   To use rpitx as a jammer, please be sure you have it INSTALLED!
-
-
+  
   - and have an antenna (copper wire) connected to GPIO 4
 
-    -- put the jammer.iq file into the rpitx directory
+    -- put the jammer.iq file into the rpitx directory (I got lazy so do it for me)
 
     -- sendiq IN rpitx needs sudo so be wary of such (for me at least)
 
-# Prerequisite
-   One Yardstick one minimum (rfcat installed)
-
-   RaspAP to connected to rpi w/o internet (create own ap)
-   -- optional
-
-   rpitx (if using rpitx to jam)
-    -- https://github.com/F5OEO/rpitx
-         Read Key Notes  --optional
-
-   Two yardstick ones ONLY if using other as jammer for rolljam --optional
-
 # Usage
 ```
-YardRF is for relaying/capturing/jamming/rolljam fun
+YardRF is for capturing/replaying/rolljam fun
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -89,7 +91,7 @@ optional arguments:
                         yardstick one
 ```
 
-# Usage example
+# Usage for yardRF
 ```
 python3 yardRF.py -f 300000000 -l 2 -n 1 -rj --lowball -o unlock.cap
 ```
