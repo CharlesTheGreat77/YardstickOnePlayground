@@ -46,7 +46,7 @@ def main():
     ##some sanity check
     # no medical frequency ranges please
     if (frequency >= 400000000) and (frequency <= 416000000):
-        print("[*] Sorry, Medical frequency ranges are permitted..\n")
+        print("[*] Sorry, Medical frequency ranges are NOT permitted..\n")
         exit(0)
 
     # config with given settings
