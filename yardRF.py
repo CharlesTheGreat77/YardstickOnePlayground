@@ -140,7 +140,7 @@ def main():
         if not auto:
             input("[ENTER TO SEND PAYLOAD]")
         print("[*] Replaying all captured signals..\n")
-        for x in range(0, number):
+        for x in range(0, len(signals)):
             d.makePktFLEN(len(payloads[x]))
             #time.sleep(.5)
             d.RFxmit(payloads[x])
