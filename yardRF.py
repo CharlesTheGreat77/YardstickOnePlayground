@@ -154,7 +154,6 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs):
     signals = []
     x = 0
     print("[*] Live Packet Capture: \n")
-    time.sleep(1)
     while x < limit:
         try:
             capture, t = d.RFrecv(timeout=1, blocksize=bs)
