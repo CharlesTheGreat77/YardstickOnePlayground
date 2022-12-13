@@ -156,7 +156,7 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs):
     print("[*] Live Packet Capture: \n")
     while x < limit:
         try:
-            capture, t = d.RFrecv(timeout=1, blocksize=bs)
+            capture, t = d.RFrecv(timeout=1, blocksize=bs) # when testing on my vehicle, i needed the blocksize to be 475 
             cap = capture.hex()
 
             strength = 0 - ord(d.getRSSI())
