@@ -134,7 +134,7 @@ def main():
         for x in range(1, len(payloads)):
             d.makePktFLEN(len(payloads[x]))
             #time.sleep(.5)
-            d.RFxmit(payloads[x])
+            d.RFxmit(payloads[x], repeat=number)
             print("[PACKET SENT] Payload transmittion completed..\n")
     else:
         if not auto:
@@ -143,7 +143,7 @@ def main():
         for x in range(0, len(signals)):
             d.makePktFLEN(len(payloads[x]))
             #time.sleep(.5)
-            d.RFxmit(payloads[x])
+            d.RFxmit(payloads[x], repeat=number)
             print("[PACKET SENT] Payload transmittion completed..\n")
 
     print("[*] All captures were sent successfully..")
