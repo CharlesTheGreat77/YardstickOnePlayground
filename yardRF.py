@@ -65,7 +65,7 @@ def main():
         d.setMdmDeviatn(deviation)
     d.setMaxPower() # max power
     if low:
-        d.lowball() #?? adds noise into the mix?? may or may not need it
+        d.lowball(1) #?? adds noise into the mix?? may or may not need it
 
     # read from cap file
     if cap:
