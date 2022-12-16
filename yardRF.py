@@ -163,7 +163,7 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs):
             if (re.search(r'((0)\2{15,})', cap)):
                 print("[*] Signal Strength: " + str(strength))
                 if (strength > minRSSI and strength < maxRSSI):
-                    if (cap.count('f') < 300):
+                    if (cap.count('f') < 350):
                         cap = cap.replace('fffff', '') # trim 'f'>
                         print(cap)
                         print('[*] Signal Strength: ' + str(strength))
