@@ -36,7 +36,7 @@ def main():
     number = args.number
     output = args.output
     cap = args.cap
-    limit = args.limit
+    limit = args.limit # for me to capture my unlock signal, I needed the limit to be 2 minimum.. as the sync and unlock are two different signals??
     rolljam = args.rolljam
     auto = args.auto
     low = args.lowball
@@ -161,12 +161,13 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation):
             cap = capture.hex()
 
             strength = 0 - ord(d.getRSSI())
+# Giving issues in terms of not appending the sync and so forth. So commenting it out until then
 #            if (re.search(r'((0)\2{15,})', cap)):
 #                print("[*] Signal Strength: " + str(strength))
 #                if (strength > minRSSI and strength < maxRSSI):
             if (cap.count('f') < 350):
                 if modulation == 'MOD_ASK_OOK':
-                    cap = cap.replace('fffff', '') # trim 'f'>
+                    cap = cap.replace('fffff', '') # trim 'f' if OOK modulation
                 print(cap)
                 print('[*] Signal Strength: ' + str(strength))
                 signals.append(cap)
