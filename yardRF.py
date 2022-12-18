@@ -19,7 +19,6 @@ def main():
     parser.add_argument('-l', '--limit', help='Specify capture limit [Default 2]', default=2, required=False, type=int)
     parser.add_argument('-rj', '--rolljam', help='Enable to send 1st capture, THEN second whenever specified', required=False, action='store_true')
     parser.add_argument('-a', '--auto', help='Enable to automatically send captures/cap files / Use in conjunction with -rj/--rolljam to send the first signal automatically', action='store_true', required=False)
-    parser.add_argument('--lowball', help='enable lowball (noise)', action='store_true')
     parser.add_argument('-rpiJ', '--rpitx_jammer', help='Enable jammer with rpitx by specifying rpitx directory [ie. ~/Documents/rpitx]', required=False, type=str)
     parser.add_argument('-ysJ', '--yardstick_jammer', help='Enable jammer with an EXTRA yardstick one', required=False, action='store_true')
 
@@ -65,8 +64,7 @@ def main():
     if (deviation != 0):
         d.setMdmDeviatn(deviation)
     d.setMaxPower() # max power
-    if low:
-        d.lowball(0) #?? adds noise into the mix?? may or may not need it
+    d.lowball(0) #?? need it to read data??
 
     # read from cap file
     if cap:
@@ -159,6 +157,7 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation):
         try:
             capture, t = d.RFrecv(timeout=1, blocksize=bs) # when testing on my vehicle, i needed the blocksize to be 475 
             cap = capture.hex()
+#            cap = capture.encode('hex') # for python2
 
             strength = 0 - ord(d.getRSSI())
 # Giving issues in terms of not appending the sync and so forth. So commenting it out until then
