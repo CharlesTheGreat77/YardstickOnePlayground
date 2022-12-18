@@ -101,13 +101,13 @@ def main():
             c.setRFRegister(PKTCTRL1, 0xFF)
             print("[*] Starting jammer with other ys1\n")
             c = yardJammer(c, frequency)
-            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs)
+            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation)
             print("[*] Stopping Jammer..")
             c.setModeIDLE()
             print(" -  Jammer is done transmitting\n")
         else:
             # if no roll jamming just capture signal
-            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs)
+            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation)
 
     # save captures to a file
     if output:
