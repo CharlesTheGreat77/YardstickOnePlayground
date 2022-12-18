@@ -60,12 +60,13 @@ def main():
     d.setMdmDRate(baudrate)
     d.setMdmChanSpc(channel_spacing)
     d.setMdmChanBW(channel_bandwidth)
+    d.setMdmSyncMode(0)
     d.setChannel(0)
     if (deviation != 0):
         d.setMdmDeviatn(deviation)
     d.setMaxPower() # max power
     if low:
-        d.lowball(1) #?? adds noise into the mix?? may or may not need it
+        d.lowball(0) #?? adds noise into the mix?? may or may not need it
 
     # read from cap file
     if cap:
@@ -96,7 +97,7 @@ def main():
             c.setMdmChanSpc(channel_spacing)
             c.setChannel(0)
             c.setMaxPower() # max power
-            c.lowball(1)
+            c.lowball(0)
             c.setRFRegister(PKTCTRL1, 0xFF)
             print("[*] Starting jammer with other ys1\n")
             c = yardJammer(c, frequency)
@@ -150,7 +151,7 @@ def main():
     d.setModeIDLE()
 
 
-def captureSignal(d, minRSSI, maxRSSI, limit, bs):
+def captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation):
     signals = []
     x = 0
     print("[*] Live Packet Capture: \n")
@@ -160,16 +161,17 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs):
             cap = capture.hex()
 
             strength = 0 - ord(d.getRSSI())
-            if (re.search(r'((0)\2{15,})', cap)):
-                print("[*] Signal Strength: " + str(strength))
-                if (strength > minRSSI and strength < maxRSSI):
-                    if (cap.count('f') < 350):
-                        cap = cap.replace('fffff', '') # trim 'f'>
-                        print(cap)
-                        print('[*] Signal Strength: ' + str(strength))
-                        signals.append(cap)
-                        print('-' * 20)
-                        x += 1
+#            if (re.search(r'((0)\2{15,})', cap)):
+#                print("[*] Signal Strength: " + str(strength))
+#                if (strength > minRSSI and strength < maxRSSI):
+            if (cap.count('f') < 350):
+                if modulation == 'MOD_ASK_OOK':
+                    cap = cap.replace('fffff', '') # trim 'f'>
+                print(cap)
+                print('[*] Signal Strength: ' + str(strength))
+                signals.append(cap)
+                print('-' * 20)
+                x += 1
         except ChipconUsbTimeoutException:
             pass
         except KeyboardInterrupt:
@@ -198,8 +200,8 @@ def rpitxJammer(frequency, rpitxJ):
 
 def formatCapture(d, signals):
     payloads = []
-    for i in range(0, len(signals)):
-        payload = bitstring.BitArray(hex=signals[i]).tobytes()
+    for signal in signals:
+        payload = bitstring.BitArray(hex=signal).tobytes()
         payloads.append(payload)
 
     return payloads
