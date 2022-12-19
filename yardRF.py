@@ -192,7 +192,7 @@ def rpitxJammer(frequency, rpitxJ):
         freqOffset = frequency + 300000
     # rpitx must be ran with root for me..
     # Prerequisite: jammer.iq file must be in rpitx directory.. lazy right now 
-    proc = subprocess.Popen(["sudo", "bash", "sendiq.sh", rpitxJ, str(freqOffset)], stdout=open('/dev/null', 'w'), stderr=open('/dev/null', 'a'), shell=True, preexec_fn=os.setpgrp)
+    proc = subprocess.Popen(["cd", rpitxJ, "&&", "sudo", "./sendiq", "-s","250000", "-f", str(freqOffset), "-t", "u8", "-i", "jammer.iq"], stdout=open('/dev/null', 'w'), stderr=open('/dev/null', 'a'), shell=True, preexec_fn=os.setpgrp)
 
     return proc
 
