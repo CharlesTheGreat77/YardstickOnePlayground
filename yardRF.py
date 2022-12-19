@@ -55,7 +55,7 @@ def main():
     if modulation=="2FSK" or modulation == "2fsk":
         d.setMdmModulation(MOD_2FSK)
     else:
-        d.setMdmModulation(modulation)
+        d.setMdmModulation(MOD_ASK_OOK)
     d.setMdmDRate(baudrate)
     d.setMdmChanSpc(channel_spacing)
     d.setMdmChanBW(channel_bandwidth)
@@ -160,10 +160,12 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation):
 #            cap = capture.encode('hex') # for python2
 
             strength = 0 - ord(d.getRSSI())
+            
 # Giving issues in terms of not appending the sync and so forth. So commenting it out until then
 #            if (re.search(r'((0)\2{15,})', cap)):
 #                print("[*] Signal Strength: " + str(strength))
 #                if (strength > minRSSI and strength < maxRSSI):
+
             if (cap.count('f') < 350):
                 if modulation == 'MOD_ASK_OOK':
                     cap = cap.replace('fffff', '') # trim 'f' if OOK modulation
@@ -194,7 +196,7 @@ def rpitxJammer(frequency, rpitxJ):
         freqOffset = frequency + 300000
     # rpitx must be ran with root for me..
     # Prerequisite: jammer.iq file must be in rpitx directory.. lazy right now 
-    proc = subprocess.Popen(["sudo", "bash","sendiq.sh", rpitxJ, str(freqOffset)], stdout=open('/dev/null', 'w'), stderr=open('/dev/null', 'a'), shell=True, preexec_fn=os.setpgrp)
+    proc = subprocess.Popen(["sudo", "bash", "sendiq.sh", rpitxJ, str(freqOffset)], stdout=open('/dev/null', 'w'), stderr=open('/dev/null', 'a'), shell=True, preexec_fn=os.setpgrp)
 
     return proc
 
