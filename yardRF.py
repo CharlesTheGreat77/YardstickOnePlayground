@@ -131,7 +131,6 @@ def main():
         input("[ENTER TO SEND OTHER PAYLOAD]")
         for x in range(1, len(payloads)):
             d.makePktFLEN(len(payloads[x]))
-            #time.sleep(.5)
             d.RFxmit(payloads[x] + emptyKey * number)
             print("[PACKET SENT] Payload transmittion completed..\n")
     else:
@@ -140,7 +139,6 @@ def main():
         print("[*] Replaying all captured signals..\n")
         for x in range(0, len(signals)):
             d.makePktFLEN(len(payloads[x]))
-            #time.sleep(.5)
             d.RFxmit(payloads[x] + emptyKey * number)
             print("[PACKET SENT] Payload transmittion completed..\n")
 
