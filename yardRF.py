@@ -38,7 +38,6 @@ def main():
     limit = args.limit # for me to capture my unlock signal, I needed the limit to be 2 minimum.. as the sync and unlock are two different signals??
     rolljam = args.rolljam
     auto = args.auto
-    low = args.lowball
     rpitxJ = args.rpitx_jammer
     ysJ = args.yardstick_jammer
 
