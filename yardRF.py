@@ -98,13 +98,13 @@ def main():
             c.setRFRegister(PKTCTRL1, 0xFF)
             print("[*] Starting jammer with other ys1\n")
             c = yardJammer(c, frequency)
-            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation)
+            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs)
             print("[*] Stopping Jammer..")
             c.setModeIDLE()
             print(" -  Jammer is done transmitting\n")
         else:
             # if no roll jamming just capture signal
-            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation)
+            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs)
 
     # save captures to a file
     if output:
@@ -148,7 +148,7 @@ def main():
     d.setModeIDLE()
 
 
-def captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation):
+def captureSignal(d, minRSSI, maxRSSI, limit, bs):
     signals = []
     x = 0
     print("[*] Live Packet Capture: \n")
@@ -166,13 +166,12 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation):
 #                if (strength > minRSSI and strength < maxRSSI):
 
             if (cap.count('f') < 350):
-                if modulation == 'MOD_ASK_OOK':
-                    cap = cap.replace('fffff', '') # trim 'f' if OOK modulation
                 print(cap)
                 print('[*] Signal Strength: ' + str(strength))
                 signals.append(cap)
                 print('-' * 20)
                 x += 1
+
         except ChipconUsbTimeoutException:
             pass
         except KeyboardInterrupt:
