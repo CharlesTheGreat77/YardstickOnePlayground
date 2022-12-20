@@ -93,20 +93,7 @@ def main():
             time.sleep(1)
         # jam with other yardstick if specified
         elif ysJ:
-            # config jammer
-            c = RfCat(idx=1)
-            c.setMdmModulation(MOD_ASK_OOK) #ask for jammer
-            offset = frequency - 80000
-            if offset < 300000000:
-                offset = frequency + 80000
-            c.setFreq(offset)
-            c.setMdmDRate(baudrate)
-            c.setMdmChanBW(channel_bandwidth)
-            c.setMdmChanSpc(channel_spacing)
-            c.setChannel(0)
-            c.setMaxPower() # max power
-            c.lowball(0)
-            c.setRFRegister(PKTCTRL1, 0xFF)
+            # start jammer
             print("[*] Starting jammer with other ys1\n")
             c = yardJammer(c, frequency)
             signals = captureSignal(d, minRSSI, maxRSSI, limit, bs)
@@ -192,6 +179,19 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs):
 
 # jam wit yardstick
 def yardJammer(c, frequency):
+    c = RfCat(idx=1)
+    c.setMdmModulation(MOD_ASK_OOK) #ask for jammer
+    offset = frequency - 80000
+    if offset < 300000000:
+        offset = frequency + 80000
+    c.setFreq(offset)
+    c.setMdmDRate(baudrate)
+    c.setMdmChanBW(channel_bandwidth)
+    c.setMdmChanSpc(channel_spacing)
+    c.setChannel(0)
+    c.setMaxPower() # max power
+    c.lowball(0)
+    c.setRFRegister(PKTCTRL1, 0xFF)
     c.setModeTX()
 
     return c
