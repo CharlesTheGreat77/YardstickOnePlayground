@@ -167,6 +167,7 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs):
 #                print("[*] Signal Strength: " + str(strength))
 #                if (strength > minRSSI and strength < maxRSSI):
 
+            # try to filter some noise
             if (cap.count('f') < 425) and (cap.count('0') < 425):
                 print(cap)
                 print('[*] Signal Strength: ' + str(strength))
