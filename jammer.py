@@ -30,7 +30,7 @@ def setup(frequency, channel_bandwidth, channel_spacing):
     return d
 
 def jam(d):
-    raw_input("[PRESS ENTER TO START JAMMER]\n")
+    input("[PRESS ENTER TO START JAMMER]\n")
     try:
         print("[JAMMING]")
         print("[*] CTRL-C to Stop Jamming")
