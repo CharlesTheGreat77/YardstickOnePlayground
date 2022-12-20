@@ -11,15 +11,16 @@ def main():
 
     args = parser.parse_args()
     frequency = args.frequency
+    baudrate = args.baudrate
     channel_bandwidth = args.channel_bandwidth
     channel_spacing = args.channel_spacing
 
     print("[*] Setting Up Configuration Settings..")
     time.sleep(2)
-    d = setup(frequency, channel_bandwidth, channel_spacing)
+    d = setup(frequency, channel_bandwidth, channel_spacing, baudrate)
     jam(d)
 
-def setup(frequency, channel_bandwidth, channel_spacing):
+def setup(frequency, channel_bandwidth, channel_spacing, baudrate):
     d = RfCat()
     d.setFreq(frequency)
     d.setMdmModulation(MOD_ASK_OOK)
