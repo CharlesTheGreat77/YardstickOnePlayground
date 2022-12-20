@@ -52,7 +52,7 @@ def main():
     d = RfCat(idx=0)
     d.setFreq(frequency)
     if modulation=="2FSK" or modulation == "2fsk":
-        d.setMdmModulation(MOD_2FSK)
+        d.setMdmModulation(MOD_2FSK) # my vehicle used 2fsk but may be ASKOOK for older cars
     else:
         d.setMdmModulation(MOD_ASK_OOK)
     d.setMdmDRate(baudrate)
