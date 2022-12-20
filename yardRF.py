@@ -157,9 +157,7 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs):
             strength = 0 - ord(d.getRSSI())
 
 # Giving issues in terms of not appending the sync and so forth. So commenting it out until then
-#            if (re.search(r'((0)\2{15,})', cap)):
-#                print("[*] Signal Strength: " + str(strength))
-#                if (strength > minRSSI and strength < maxRSSI):
+#           if (strength > minRSSI and strength < maxRSSI):
 
             # try to filter some noise
             if (cap.count('f') < 450) and (cap.count('0') < 450):
