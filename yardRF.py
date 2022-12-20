@@ -74,6 +74,7 @@ def main():
         # a little iffy in terms of jamming so may need to do so manually in another terminal
         # manual jamming: cd <rpitx directory>
         # sudo ./sendiq -f <frequency - 80000> -t u8 -s 250000 -i jammer.iq
+        # CTRL-C to stop
         # start jamming with rpitx if specified
         if rpitxJ != None:
             print("[*] Starting Jammer with rpitx\n -  Frequency: " + str(frequency - 80000))
