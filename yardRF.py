@@ -61,7 +61,7 @@ def main():
     d.setMdmSyncMode(0)
     d.setChannel(0)
     if (deviation != 0):
-        d.setMdmDeviatn(deviation)
+        d.setMdmDeviatn(deviation) # for my vehicle, my deviation needed to he 4760, but 2930 is also what I have seen work on other vehicles 
     d.setMaxPower() # max power
     d.lowball(0) #?? need it to read data??
 
@@ -163,7 +163,7 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs):
 #                print("[*] Signal Strength: " + str(strength))
 #                if (strength > minRSSI and strength < maxRSSI):
 
-            if (cap.count('f') < 350):
+            if (cap.count('f') < 425) and (cap.count('0') < 425):
                 print(cap)
                 print('[*] Signal Strength: ' + str(strength))
                 signals.append(cap)
