@@ -76,7 +76,7 @@ def main():
         # sudo ./sendiq -f <frequency - 80000> -t u8 -s 250000 -i jammer.iq
         # start jamming with rpitx if specified
         if rpitxJ != None:
-            print("[*] Starting Jammer with rpitx\n -  Frequency: " + str(frequency - 300000))
+            print("[*] Starting Jammer with rpitx\n -  Frequency: " + str(frequency - 80000))
             proc = rpitxJammer(frequency, rpitxJ)
             signals = captureSignal(d, minRSSI, maxRSSI, limit, bs)
             proc.kill() # stop jammer
@@ -88,9 +88,9 @@ def main():
             # config jammer
             c = RfCat(idx=1)
             c.setMdmModulation(MOD_ASK_OOK) #ask for jammer
-            offset = frequency - 300000
+            offset = frequency - 80000
             if offset < 300000000:
-                offset = frequency + 300000
+                offset = frequency + 80000
             c.setFreq(offset)
             c.setMdmDRate(baudrate)
             c.setMdmChanBW(channel_bandwidth)
@@ -189,10 +189,10 @@ def yardJammer(c, frequency):
 
 # jam wit rpitx
 def rpitxJammer(frequency, rpitxJ):
-    # frequency offset of -300000, change as necessary -80000 is popular as well but awfully close to freq. 
-    freqOffset = frequency - 300000
+    # frequency offset of -80000, change as necessary
+    freqOffset = frequency - 80000
     if freqOffset < 300000000:
-        freqOffset = frequency + 300000
+        freqOffset = frequency + 80000
     # rpitx must be ran with root for me..
     # Prerequisite: jammer.iq file must be in rpitx directory.. lazy right now 
     proc = subprocess.Popen(["cd", rpitxJ, "&&", "sudo", "./sendiq", "-s","250000", "-f", str(freqOffset), "-t", "u8", "-i", "jammer.iq"], stdout=open('/dev/null', 'w'), stderr=open('/dev/null', 'a'), shell=True, preexec_fn=os.setpgrp)
