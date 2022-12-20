@@ -95,7 +95,7 @@ def main():
         elif ysJ:
             # start jammer
             print("[*] Starting jammer with other ys1\n")
-            c = yardJammer(c, frequency)
+            yardJammer(frequency)
             signals = captureSignal(d, minRSSI, maxRSSI, limit, bs)
             print("[*] Stopping Jammer..")
             c.setModeIDLE()
@@ -178,7 +178,7 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs):
     return signals
 
 # jam wit yardstick
-def yardJammer(c, frequency):
+def yardJammer(frequency):
     c = RfCat(idx=1)
     c.setMdmModulation(MOD_ASK_OOK) #ask for jammer
     offset = frequency - 80000
