@@ -89,9 +89,17 @@ optional arguments:
   -ysJ, --yardstick_jammer
                         Enable jammer with an EXTRA
                         yardstick one
+  -tesla TESLA_PORT, --tesla_port TESLA_PORT
+                        Specify country to send tesla
+                        charging port signal example: 
+                        US, EU/AUS
 ```
 
 # Usage for yardRF
+```
+python3 yardRF.py -tesla US [change to EU or anything else for other countries]
+```
+-- sends the signal to open teslas charging port on frequency 315MHz (US frequency range for tesla port)
 ```
 python3 yardRF.py -f 300000000 -l 2 -n 1 -rj --lowball -o unlock.cap
 ```
@@ -128,3 +136,4 @@ python3 yardRF.py -f 305000000 -l 2 -n 1 -ysJ -o unlock.cap
 
 # Honorable Mention(s)
 - https://github.com/cclabsInc/RFCrack
+- https://github.com/pickeditmate
