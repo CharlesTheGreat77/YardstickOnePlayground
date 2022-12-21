@@ -69,7 +69,7 @@ def main():
     d.setChannel(0)
     if (deviation != 0):
         d.setMdmDeviatn(deviation) # for my vehicle, my deviation needed to he 4760, but 2930 is also what I have seen work on other vehicles 
-    d.setMaxPower() # max power
+    d.setAmpMode(1)
     d.lowball(0) #?? need it to read data??
 
     # read from cap file
