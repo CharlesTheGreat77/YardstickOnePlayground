@@ -86,7 +86,7 @@ def main():
         if rpitxJ != None:
             print("[*] Starting Jammer with rpitx\n -  Frequency: " + str(frequency - 80000))
             proc = rpitxJammer(frequency, rpitxJ)
-            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs)
+            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation)
             proc.kill() # stop jammer
             print("[*] Jammer is done transmitting")
             # give time to stop pressing fob
@@ -96,13 +96,13 @@ def main():
             # start jammer
             print("[*] Starting jammer with other ys1\n")
             yardJammer(frequency)
-            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs)
+            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation)
             print("[*] Stopping Jammer..")
             c.setModeIDLE()
             print(" -  Jammer is done transmitting\n")
         else:
             # if no roll jamming just capture signal
-            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs)
+            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation)
 
     # save captures to a file
     if output:
@@ -144,7 +144,7 @@ def main():
     d.setModeIDLE()
 
 
-def captureSignal(d, minRSSI, maxRSSI, limit, bs):
+def captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation):
     signals = []
     x = 0
     print("[*] Live Packet Capture: \n")
@@ -156,16 +156,24 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs):
 
             strength = 0 - ord(d.getRSSI())
 
-# Giving issues in terms of not appending the sync and so forth. So commenting it out until then
-#           if (strength > minRSSI and strength < maxRSSI):
 
+            if (strength > minRSSI and strength < maxRSSI):
+            # edit count if signal not showing up
             # try to filter some noise
-            if (cap.count('f') < 450) and (cap.count('0') < 450):
-                print(cap)
-                print('[*] Signal Strength: ' + str(strength))
-                signals.append(cap)
-                print('-' * 20)
-                x += 1
+                if modulation == 'MOD_ASK_OOK':
+                    if (cap.count('f') < bs):
+                        print(cap)
+                        print('[*] Signal Strength: ' + str(strength))
+                        signals.append(cap)
+                        print('-' * 20)
+                        x += 1
+                else:
+                    if (cap.count('f') < bs) and (cap.count('0') < bs):
+                        print(cap)
+                        print('[*] Signal Strength: ' + str(strength))
+                        signals.append(cap)
+                        print('-' * 20)
+                        x += 1
 
         except ChipconUsbTimeoutException:
             pass
