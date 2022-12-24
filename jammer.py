@@ -35,7 +35,7 @@ def jam(d):
     print("[*] CTRL-C to Stop Jamming")
     while True:
         try:
-            d.setModeTX()
+            #d.setModeTX() do it yourself
         except KeyboardInterrupt:
             d.setModeIDLE()
             print("[-] Jammer off.. all done ;)")
