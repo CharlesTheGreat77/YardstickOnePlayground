@@ -32,14 +32,14 @@ def setup(frequency, channel_bandwidth, channel_spacing, baudrate):
 
 def jam(d):
     input("[PRESS ENTER TO START JAMMER]\n")
-    try:
-        print("[JAMMING]")
-        print("[*] CTRL-C to Stop Jamming")
-        d.setModeTX()
-    except KeyboardInterrupt:
-        d.setModeIDLE()
-        print("[-] Jammer off.. all done ;)")
-        exit(0)
+    print("[*] CTRL-C to Stop Jamming")
+    while True:
+        try:
+            d.setModeTX()
+        except KeyboardInterrupt:
+            d.setModeIDLE()
+            print("[-] Jammer off.. all done ;)")
+            exit(0)
     
 
 main()
