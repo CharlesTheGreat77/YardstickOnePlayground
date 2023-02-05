@@ -10,7 +10,7 @@ def main():
     parser.add_argument('-d', '--deviation', help='Specify deviation [default: 0] examples: 2.380371, 47.60742, 29.30', default=0, type=float)
     parser.add_argument('-s', '--channel_spacing', help='Specify Channel Spacing [Default: 24000]', type=int, default=24000)
     parser.add_argument('-cb', '--channel_bandwidth', help='Specify channel bandwidth [default: 750000]', default=750000, type=int)
-    parser.add_argument('-bs', '--blocksize', help='Specify capture blocksize [default: 400]', default=400, type=int)
+    parser.add_argument('-bs', '--blocksize', help='Specify capture blocksize ', required=False, type=int)
     parser.add_argument('-min', '--minRSSI', help='Specify minimum rssi db to accept signal [default: -100]', default=-100, type=int)
     parser.add_argument('-max', '--maxRSSI', help='Specify maximum rssi db to accept signal [default 40]', default=40, type=int)
     parser.add_argument('-n', '--number', help='Specify number of signals to send [Default: 1 transmission]', default=1, type=int)
@@ -150,9 +150,12 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation):
     print("[*] Live Packet Capture: \n")
     while x < limit:
         try:
-            capture, t = d.RFrecv(timeout=1, blocksize=bs) # when testing on my vehicle, i needed the blocksize to be 475 
+            if bs != None:
+                capture, t = d.RFrecv(timeout=1, blocksize=bs) # when testing on my vehicle, i needed the blocksize to be 475 
+            else:
+                capture, t = d.RFrecv()
+
             cap = capture.hex()
-#            cap = capture.encode('hex') # for python2
 
             strength = 0 - ord(d.getRSSI())
 
