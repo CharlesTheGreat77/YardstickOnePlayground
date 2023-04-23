@@ -95,7 +95,7 @@ def main():
         elif ysJ:
             # start jammer
             print("[*] Starting jammer with other ys1\n")
-            yardJammer(frequency)
+            c = yardJammer(frequency)
             signals = captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation)
             print("[*] Stopping Jammer..")
             c.setModeIDLE()
