@@ -164,14 +164,14 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation):
             # edit count if signal not showing up
             # try to filter some noise
                 if modulation == 'MOD_ASK_OOK':
-                    if (cap.count('f') < bs):
+                    if (cap.count('f') < 300):
                         print(cap)
                         print('[*] Signal Strength: ' + str(strength))
                         signals.append(cap)
                         print('-' * 20)
                         x += 1
                 else:
-                    if (cap.count('f') < bs) and (cap.count('0') < bs):
+                    if (cap.count('f') < 300) and (cap.count('0') < 300):
                         print(cap)
                         print('[*] Signal Strength: ' + str(strength))
                         signals.append(cap)
