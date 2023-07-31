@@ -159,7 +159,7 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation):
 
             strength = 0 - ord(d.getRSSI())
 
-
+            # comment out this line if no captures are being seen
             if (strength > minRSSI and strength < maxRSSI):
             # edit count if signal not showing up
             # try to filter some noise
