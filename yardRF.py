@@ -36,7 +36,7 @@ def main():
     number = args.number
     output = args.output
     cap = args.cap
-    limit = args.limit # for me to capture my unlock signal, I needed the limit to be 2 minimum.. as the sync and unlock are two different signals??
+    limit = args.limit # for me to capture my unlock signal, I needed the limit to be 2 minimum.. as the sync and unlock are two different signals?? but it ultimately depended on my blocksize (-bs)
     rolljam = args.rolljam
     auto = args.auto
     rpitxJ = args.rpitx_jammer
