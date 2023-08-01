@@ -157,7 +157,7 @@ def captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation):
 
             cap = capture.hex()
 
-            strength = 0 - ord(d.getRSSI())
+            strength = int(d.getRSSI().hex(), 16)
 
             # comment out this line if no captures are being seen
             if (strength > minRSSI and strength < maxRSSI):
