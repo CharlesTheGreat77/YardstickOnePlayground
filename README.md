@@ -128,7 +128,7 @@ python3 yardRF.py -f 433920000 -l 2 -n 1 -rpiJ ~/rpitx/ -m 2fsk -d 47607.42 -o u
 
 Extra Yardstick One rolljam usage
 ```
-python3 yardRF.py -f 305000000 -l 2 -n 1 -ysJ -o unlock.cap
+python3 yardRF.py -f 305000000 -l 2 -n 1 -ysJ -m 2fsk -o unlock.cap
 ```
 -- captures signals on frequency 305MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), use additional yardstick one to jam (-ysJ/--yardstick_jammer), set the modulation to 2fsk [default: ASK_OOK] (-m/--modulation), save captures to a file (-o/--output)
 
