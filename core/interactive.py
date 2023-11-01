@@ -90,6 +90,10 @@ def interactive_mode_tx(d):
 def menu(question, options):
     '''
     Function to interact/choose options using bullet library
+    type var: string [question]
+    type var: array [options]
+    return:
+        type var: string [result]
     '''
     os.system('clear')
     cli = Bullet(
