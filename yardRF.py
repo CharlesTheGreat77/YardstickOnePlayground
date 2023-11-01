@@ -71,6 +71,16 @@ def main():
         yardstick_tx(d, payloads, True, number)
         d.setModeIDLE()
         interactive_mode(d)
+    
+    # jam with rpitx or another yardstick one, and stop after signals are captured
+    if rpitxJ != None or ysJ:
+        signals = roll_jam(rpitxJ, ysJ)
+        print("[*] Formatting each signal captured..\n")
+        payloads = format_signals(signals)
+        print("[*] Transmitting signals captured..\n")
+        yardstick_tx(d, payloads, auto, number)
+        return True
+
 
     # no medical frequency ranges please
     if (frequency >= 400000000) and (frequency <= 416000000):
@@ -108,14 +118,6 @@ def main():
     print("[*] Transmitting signals captured..\n")
     yardstick_tx(d, payloads, auto, number)
     
-    # jam with rpitx or another yardstick one, and stop after signals are captured
-    if rpitxJ != None or ysJ:
-        signals = roll_jam(rpitxJ, ysJ)
-        print("[*] Formatting each signal captured..\n")
-        payloads = format_signals(signals)
-        print("[*] Transmitting signals captured..\n")
-        yardstick_tx(d, payloads, auto, number)
-
     d.setModeIDLE()
 
 if __name__=='__main__':
