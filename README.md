@@ -104,17 +104,15 @@ python3 yardRF.py -i
 
 rpitx usage -- see Key Notes for setup
 ```
-python3 yardRF.py -f 433920000 -l 2 -n 1 -rpiJ ~/rpitx/ -m 2fsk -d 47607.42 -o unlock.cap
+python3 yardRF.py -f 433920000 -n 1 -rpiJ ~/rpitx/ -m 2fsk -d 47607.42 -o unlock.cap
 ```
--- captures signals on frequency 433.92MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), use rpitx for jammer by specifying the path to rpitx (-rpiJ/--rpitx_jammer), set the modulation to 2fsk [default: ASK_OOK] (-m/--modulation), we setting the deviation to 47607.42 [47.60742] (-d/--deviation), save captured signals to a file (-o/--output)
+-- captures signals on frequency 433.92MH, send the signals only once (-n/--number), use rpitx for jammer by specifying the path to rpitx (-rpiJ/--rpitx_jammer), set the modulation to 2fsk [default: ASK_OOK] (-m/--modulation), set the deviation to 47607.42 [47.60742] (-d/--deviation), save captured signals to an output file
 
 Extra Yardstick One rolljam usage
 ```
-python3 yardRF.py -f 305000000 -l 2 -n 1 -ysJ -m 2fsk -o unlock.cap
+python3 yardRF.py -f 305000000 -n 1 -ysJ -m 2fsk -o unlock.cap
 ```
--- captures signals on frequency 305MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), use additional yardstick one to jam (-ysJ/--yardstick_jammer), set the modulation to 2fsk [default: ASK_OOK] (-m/--modulation), save captures to a file (-o/--output)
-
-* If jamming signal is all thats being captured, be sure to adjust the offset frequency as necessary on line 90 & 93 IF using extra yardstick one OR line 192 & 194 IF using rpitx
+-- captures signals on frequency 305MHz, send the signals only once (-n/--number), use additional yardstick one to jam (-ysJ/--yardstick_jammer), set the modulation to 2fsk [default: ASK_OOK] (-m/--modulation), save captures to a file (-o/--output)
 
 # Honorable Mention(s)
 - https://github.com/cclabsInc/RFCrack
