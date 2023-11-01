@@ -82,26 +82,23 @@ options:
 
 # Usage for yardRF
 ```
-python3 yardRF.py -tesla US [change to EU or anything else for other countries]
+python3 yardRF.py -telsa
 ```
--- sends the signal to open teslas charging port on frequency 315MHz (US frequency range for tesla port)
+-- sends the signal to open teslas charging port
 ```
-python3 yardRF.py -f 300000000 -l 2 -n 1 -rj --lowball -o unlock.cap
+python3 yardRF.py -f 300000000 -o unlock.cap
 ```
--- captures signals on frequency 300MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), rolljam enabled (so send the first capture only, THEN other captures), --lowball to capture some noise, -o saves the capture to a file (-o/--output). 
+-- captures signals on frequency 300MHz, and saves such to a output file
 
 ```
-python3 yardRF.py -f 315000000 -l 2 -n 1 -d 2930 -m 2fsk -a
+python3 yardRF.py -f 315000000 -n 1 -d 2930 -m 2fsk -auto
 ```
--- captures signals on frequency 315MHz, waits for 2 signals (-l/--limit), send the signals captured only once (-n/--number), set the deviation to 2930 [29.30] (-d/--deviation), set modulation to 2fsk [default: ASK_OOK] (-m/--modulation), automatically send captued signals (-a/--automatic).
+-- captures signals on frequency 315MHz, sets deviation to 2930 and modulation to MOD_2FSK, (-auto): sends the captures automatically, (-n/--number): amount of times to retransmit signal
+
 ```
-python3 yardRF.py -f 925000000 -l 2 -n 1 -cb 60000 -bs 200 -o unlock.cap
+python3 yardRF.py -i
 ```
--- captures signals on frequency 925MHz, waits for 2 signals (-l/--limit), send the signals only once (-n/--number), set channel bandwidth to 60000 (-cb/--channel_bandwidth), set the blocksize [size of the capture/payload] (-bs/--blocksize), save captures to a file (-o/--output).
-```
-python3 yardRF.py -f 330000000 -l 5 -n 1 -minRSSI -80 -maxRSSI 20 -b 4000 -o output.cap
-```
--- captures signals on frequency 300MHz, waits for 5 signals (-l/--limit), sets minimum signal strength to -80 db [used in conjunction with --maxRSSI to only capture signals between a certain range] (-minRSSI, --minRSSI), set maximum signal strength of 40 db (-maxRSSI/--maxRSSI), set baudrate to 4000 [how long each bit is transmitted for] (-b/--baudrate), save captured signals to an output file (-o/--output)
+-- enables interactive mode
 
 • Usage with rpitx & extra yardstick for rolljam
 
