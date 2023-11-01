@@ -51,7 +51,9 @@ def rpitx_jammer(frequency, rpitxJ):
     '''
     fucnntion to jam with rpitx with the sendiq.sh jammer file created at a 80000
     plus or minus offset.
-    - returns object
+    type var: int [frequency]
+    type var: string [rpitxJ]
+    return object [proc (process)]
     '''
     # frequency offset of -80000, change as necessary
     freqOffset = frequency - 80000
