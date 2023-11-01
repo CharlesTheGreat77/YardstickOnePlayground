@@ -88,6 +88,11 @@ options:
 
 # Usage for yardRF
 ```
+python3 yardRF.py -i
+```
+-- enables interactive mode
+
+```
 python3 yardRF.py -telsa
 ```
 -- sends the signal to open teslas charging port
@@ -100,11 +105,6 @@ python3 yardRF.py -f 300000000 -o unlock.cap
 python3 yardRF.py -f 315000000 -n 1 -d 2930 -m 2fsk -auto
 ```
 -- captures signals on frequency 315MHz, sets deviation to 2930 and modulation to MOD_2FSK, (-auto): sends the captures automatically, (-n/--number): amount of times to retransmit signal
-
-```
-python3 yardRF.py -i
-```
--- enables interactive mode
 
 • Usage with rpitx & extra yardstick for rolljam
 
