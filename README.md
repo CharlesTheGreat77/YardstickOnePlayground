@@ -21,6 +21,12 @@ Yardstick One Scripts for your RF Adventures
         Read Key Notes 
 
    3. Two yardstick ones ONLY if using for rolljam
+
+# Install
+```
+# Installs bullet library for interactive mode
+pip3 install -r requirements.txt
+```
    
 # Key Notes
   To use rpitx for rolljam attacks, please be sure you have it INSTALLED!
