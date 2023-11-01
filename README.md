@@ -37,6 +37,10 @@ pip3 install -r requirements.txt
 
     -- sendiq IN rpitx needs sudo so be wary of such (for me at least)
 
+
+https://github.com/CharlesTheGreat77/YardstickOnePlayground/assets/27988707/bd94654c-9cce-47c7-a93b-485dae6e683a
+
+
 # Usage
 ```
 usage: yardRF.py [-h] [-f FREQUENCY] [-m MODULATION] [-b BAUDRATE] [-d DEVIATION]
