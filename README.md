@@ -93,7 +93,7 @@ python3 yardRF.py -i
 -- enables interactive mode
 
 ```
-python3 yardRF.py -telsa
+python3 yardRF.py -t
 ```
 -- sends the signal to open teslas charging port
 ```
