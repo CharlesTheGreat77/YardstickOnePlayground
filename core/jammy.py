@@ -1,5 +1,6 @@
 import subprocess
 from core.subghz import yardstick_rx
+from rflib import *
 
 def roll_jam(rpitxJ, ysJ):
     if rpitxJ != None: # if jamming with rpitx
