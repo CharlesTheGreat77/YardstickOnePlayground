@@ -8,7 +8,7 @@ def roll_jam(rpitxJ, ysJ):
         jammer = rpitxJammer(frequency, rpitxJ)
         yardstick = yardstick_rx()
         signals = yardstick.capture_signals(d, minRSSI, maxRSSI, bs)
-        print("[*] Stopping has been Jammer..")
+        print("[*] Jammer has been stopped..")
         jammer.kill() # stop jammer
         time.sleep(1)
     elif ysJ: # if jamming with another yardstick 1
