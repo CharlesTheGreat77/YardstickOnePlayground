@@ -107,11 +107,14 @@ def main():
     payloads = format_signals(signals)
     print("[*] Transmitting signals captured..\n")
     yardstick_tx(d, payloads, auto, number)
-    d.setModeIDLE()
     
     # jam with rpitx or another yardstick one, and stop after signals are captured
     if rpitxJ != None or ysJ:
         signals = roll_jam(rpitxJ, ysJ)
+        print("[*] Formatting each signal captured..\n")
+        payloads = format_signals(signals)
+        print("[*] Transmitting signals captured..\n")
+        yardstick_tx(d, payloads, auto, number)
 
     d.setModeIDLE()
 
