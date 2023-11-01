@@ -27,7 +27,8 @@ def yardstick_jammer(frequency):
     Function to jam with second yardstick one plugged in at an 80000
     plus or minus offset with a preset of "F"s being transmitted for
     easy filtering
-    - returns object
+    type var: int [frequency]
+    return object [c]
     '''
     c = RfCat(idx=1)
     c.setMdmModulation(MOD_ASK_OOK) #ASK/OOK for jammer
