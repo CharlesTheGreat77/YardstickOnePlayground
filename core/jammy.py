@@ -36,7 +36,7 @@ def yardstick_jammer(frequency):
         offset = frequency + 80000
     c.setFreq(offset)
     c.setMdmDRate(2000)
-    c.setMdmChanBW(channel_bandwidth)
+    c.calculatePktChanBW()
     c.setMdmChanSpc(25000)
     c.setChannel(0)
     c.setMaxPower() # max power
