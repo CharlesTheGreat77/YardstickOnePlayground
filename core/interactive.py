@@ -23,8 +23,13 @@ def interactive_mode(d):
 
 def interactive_configure_stick():
     '''
-    Function to set frequency, baudrate, and set registeres to match flipper zeros
-    registers
+    Function to get frequency, etc. from user
+    return:
+        type var: int [frequency]
+        type var: string [modulation]
+        type var: int [deviation]
+        type var: int [baudrate]
+            type var: int [bs (blocksize)]
     '''
     # set frequency
     frequency = menu('[*] Choose a frequency: ', ['300000000', '304000000', '310000000', '315000000', '433920000', 'CUSTOM'])
