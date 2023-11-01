@@ -70,7 +70,7 @@ def interactive_mode_tx(d):
         os.system('clear')
         frequency, modulation, deviation, baudrate, bs, payloads = parse_captured_file(input_file)
         try:
-            print(f"[*] Configuring yardstick:\n\n -> [*] Frequency: {frequency} Modulation: {modulation}\n -> Baudrate: {baudrate} Deviation: {deviation}\n")
+            print(f"[*] Configuring yardstick:\n\n[*] Frequency: {frequency} Modulation: {modulation}\n -> Baudrate: {baudrate} Deviation: {deviation}\n")
             time.sleep(1.5)
             configure_stick(d, int(frequency), modulation, int(baudrate), int(deviation), channel_bandwidth=0, channel_spacing=0, amp=True, tesla=False)
         except Exception as e:
