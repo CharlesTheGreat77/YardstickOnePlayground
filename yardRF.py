@@ -62,11 +62,8 @@ def main():
         frequency, modulation, deviation, baudrate, bs = interactive_mode(d)
         configure_stick(d, frequency, modulation, baudrate, deviation, channel_bandwidth, channel_spacing, amp, tesla)
         yardstick = yardstick_rx()
-        try:
-            signals = yardstick.capture_signals(d, minRSSI, maxRSSI, bs)
-        except Exception as e:
-            pass
-            d.setModeIDLE()
+        signals = yardstick.capture_signals(d, minRSSI, maxRSSI, bs)
+        d.setModeIDLE()
         option = menu('[*] Save signals to output file: ', ['yes', 'no'])
         if 'yes' in option:
             input_file = input("[*] Enter file name [without extension]: ")
