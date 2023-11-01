@@ -63,6 +63,7 @@ def interactive_mode_tx(d):
     '''
     Function to transmit saved captured files or transmit the tesla
     charging port.
+    type var: object [d]
     '''
     option = menu('[*] Choose an option to transmit: ', ['Captured File', 'Tesla Charging Port'])
     if option == 'Captured File':
