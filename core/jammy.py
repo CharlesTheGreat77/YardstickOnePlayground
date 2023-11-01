@@ -15,7 +15,7 @@ def roll_jam(rpitxJ, ysJ):
         print("[*] Starting jammer with other ys1..\n")
         jammer = yardstick_jammer(frequency)
         yardstick = yardstick_rx()
-        signals = capture_signals(d, minRSSI, maxRSSI, bs)
+        signals = yardstick.capture_signals(d, minRSSI, maxRSSI, bs)
         c.setModeIDLE()
         print("[*] Jammer has been stopped..\n")
     
