@@ -1,4 +1,4 @@
-import bitstring, threading, time
+import bitstring, time
 from rflib import *
 
 class yardstick_rx:
