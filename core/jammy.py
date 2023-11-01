@@ -5,7 +5,7 @@ from rflib import *
 def roll_jam(rpitxJ, ysJ):
     if rpitxJ != None: # if jamming with rpitx
         print(f"[*] Starting Jammer with rpitx..\n")
-        jammer = rpitxJammer(frequency, rpitxJ)
+        jammer = rpitx_jammer(frequency, rpitxJ)
         yardstick = yardstick_rx()
         signals = yardstick.capture_signals(d, minRSSI, maxRSSI, bs)
         jammer.kill() # stop jammer
