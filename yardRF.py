@@ -48,6 +48,12 @@ def main():
     tesla = args.tesla_port
     interactive = args.interactive
 
+
+    # no medical frequency ranges please
+    if (frequency >= 400000000) and (frequency <= 416000000):
+        print("[*] Sorry, Medical frequency ranges are NOT permitted..\n")
+        exit(0)
+
     d = RfCat(idx=0) # establish permissions with ys1
 
     signals = None
@@ -80,12 +86,6 @@ def main():
         print("[*] Transmitting signals captured..\n")
         yardstick_tx(d, payloads, auto, number)
         return True
-
-
-    # no medical frequency ranges please
-    if (frequency >= 400000000) and (frequency <= 416000000):
-        print("[*] Sorry, Medical frequency ranges are NOT permitted..\n")
-        exit(0)
 
     if tesla:
         print("[*] Popping charging port..\n")
