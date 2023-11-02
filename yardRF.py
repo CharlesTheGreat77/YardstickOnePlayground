@@ -22,7 +22,7 @@ def main():
     parser.add_argument('-n', '--number', help='Specify number of signals to send [Default: 1 transmission]', default=1, type=int)
     parser.add_argument('-o', '--output', help='Specify name of output file to replay captured signals [.cap file extension]', required=False)
     parser.add_argument('-c', '--cap', help='Specify cap file to replay previously captured signals', required=False)
-    parser.add_argument('-auto', '--auto', help='Enable to automatically send captures/cap files / Use in conjunction with -rj/--rolljam to send the first signal automatically', action='store_true', required=False)
+    parser.add_argument('-auto', '--auto', help='Enable to automatically send captures/cap files', action='store_true', required=False)
     parser.add_argument('-rpiJ', '--rpitx_jammer', help='Enable jammer with rpitx by specifying rpitx directory [ie. ~/Documents/rpitx]', required=False, type=str)
     parser.add_argument('-ysJ', '--yardstick_jammer', help='Enable jammer with an EXTRA yardstick one', required=False, action='store_true')
     parser.add_argument('-t', '--tesla_port', help='Send tesla charging port signal', required=False, action='store_true')
