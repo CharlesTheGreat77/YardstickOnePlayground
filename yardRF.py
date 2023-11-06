@@ -55,13 +55,13 @@ def main():
         exit(0)
 
     d = RfCat(idx=0) # establish permissions with ys1
+    yardstick = yardstick_rx()
 
     signals = None
     # interactive mode
     if interactive:
         frequency, modulation, deviation, baudrate, bs = interactive_mode(d)
         configure_stick(d, frequency, modulation, baudrate, deviation, channel_bandwidth, channel_spacing, amp, tesla)
-        yardstick = yardstick_rx()
         signals = yardstick.capture_signals(d, minRSSI, maxRSSI, bs)
         d.setModeIDLE()
         option = menu('[*] Save signals to output file: ', ['yes', 'no'])
@@ -101,7 +101,6 @@ def main():
     configure_stick(d, frequency, modulation, baudrate, deviation, channel_bandwidth, channel_spacing, amp, tesla)
     # capture signals
     if signals == None:
-        yardstick = yardstick_rx()
         signals = yardstick.capture_signals(d, minRSSI, maxRSSI, bs)
         os.system('clear')
         d.setModeIDLE()
