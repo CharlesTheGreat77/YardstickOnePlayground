@@ -127,6 +127,7 @@ python3 yardRF.py -f 305000000 -n 1 -ysJ -m 2fsk -o unlock.cap
 # Honorable Mention(s)
 - https://github.com/cclabsInc/RFCrack
 - https://github.com/pickeditmate
+- https://github.com/Crsarmv7l/DaikonTools-for-Yardstick-One
 
 <p align="center"> 
   <img src="https://profile-counter.glitch.me/CharlesTheGreat77/count.svg" />
