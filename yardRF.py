@@ -62,6 +62,7 @@ def main():
     if interactive:
         frequency, modulation, deviation, baudrate, bs = interactive_mode(d)
         configure_stick(d, frequency, modulation, baudrate, deviation, channel_bandwidth, channel_spacing, amp, tesla)
+        d.setModeRX()
         signals = yardstick.capture_signals(d, minRSSI, maxRSSI, bs)
         d.setModeIDLE()
         option = menu('[*] Save signals to output file: ', ['yes', 'no'])
@@ -101,6 +102,7 @@ def main():
     configure_stick(d, frequency, modulation, baudrate, deviation, channel_bandwidth, channel_spacing, amp, tesla)
     # capture signals
     if signals == None:
+        d.setModeRX()
         signals = yardstick.capture_signals(d, minRSSI, maxRSSI, bs)
         os.system('clear')
         d.setModeIDLE()
