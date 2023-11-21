@@ -81,6 +81,7 @@ def main():
         signals = roll_jam(rpitxJ, ysJ)
         print("[*] Formatting each signal captured..\n")
         payloads = format_signals(signals)
+        input("[PRESS ENTER TO TRANSMIT SIGNALS]")
         print("[*] Transmitting signals captured..\n")
         yardstick_tx(d, payloads, auto, number)
         return True
