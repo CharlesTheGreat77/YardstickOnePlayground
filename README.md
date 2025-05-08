@@ -1,6 +1,6 @@
 # YardstickOnePlayground
 Yardstick One Scripts for your RF Adventures.. receive/replay/rolljam fun!
-![00DEA4C9-2C54-43AB-953D-E68D4F0A9D72](https://user-images.githubusercontent.com/27988707/207140390-7b5ed47b-d0ec-4821-8831-7253384973a3.jpeg)
+![logo](https://user-images.githubusercontent.com/27988707/207140390-7b5ed47b-d0ec-4821-8831-7253384973a3.jpeg)
 
 
 # Disclaimer
@@ -38,7 +38,7 @@ pip3 install -r requirements.txt
     -- sendiq IN rpitx needs sudo so be wary of such (for me at least)
 
 
-https://github.com/CharlesTheGreat77/YardstickOnePlayground/assets/27988707/bd94654c-9cce-47c7-a93b-485dae6e683a
+![demo](https://github.com/CharlesTheGreat77/YardstickOnePlayground/assets/27988707/bd94654c-9cce-47c7-a93b-485dae6e683a)
 
 
 # Usage
